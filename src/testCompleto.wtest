@@ -1,0 +1,79 @@
+import marcas.*
+import jarras.*
+import personas.*
+import carpas.*
+
+test "testeo de parte 1" {
+
+	const hofbrau = new Rubia(lupulo = 6, paisDeOrigen = "alemania", graduacion = 0.09)
+    const jarraDeHofbrau = new Jarra(litros = 0.5, marca = hofbrau) 
+    assert.equals(0.045, jarraDeHofbrau.contenidoDeAlcohol())
+
+    const noah = new Belga (peso = 70, nivelDeAguante = 7, nacionalidad = "belga", leGustaMusicTrad = true)
+    noah.comprarJarra(jarraDeHofbrau)
+    noah.comprarJarra(jarraDeHofbrau)
+    assert.notThat(noah.estaEbrio()) 
+    //noah.comprarJarra(jarraDeHofbrau) 
+    //assert.that(noah.estaEbrio()) Noah esta ebrio, comento para poder seguir utilizandolo en la siguiente parte del test
+
+    const adam = new Belga(peso = 85, nivelDeAguante = 25, leGustaMusicTrad = true)
+    const marek = new Checo(peso = 79, nivelDeAguante = 38, leGustaMusicTrad = true)
+    const adler = new Aleman(peso = 90, nivelDeAguante = 10, leGustaMusicTrad = true)
+    assert.that(adam.leGusta(hofbrau))
+    assert.that(marek.leGusta(hofbrau))
+    assert.that(adler.leGusta(hofbrau))
+
+
+
+ "testeo de parte 2" 
+	
+	const zelt = new Carpa(limiteDeAdmision = 20, tieneBanda = true, marcaAVender = hofbrau) 
+	
+	const emiliano = new Persona(peso = 75, nivelDeAguante = 50, nacionalidad = "argentino", leGustaMusicTrad = true)
+	
+	assert.that(noah.personaQuiereEntrar(zelt))
+    assert.that(marek.personaQuiereEntrar(zelt))
+    assert.that(adler.personaQuiereEntrar(zelt))
+    assert.that(adam.personaQuiereEntrar(zelt))
+    assert.that(emiliano.personaQuiereEntrar(zelt))
+   
+    assert.that(zelt.personaPuedeEntrar(adam))
+    assert.that(zelt.personaPuedeEntrar(adler))
+    assert.that(zelt.personaPuedeEntrar(noah))
+    assert.that(zelt.personaPuedeEntrar(marek))
+    assert.that(zelt.personaPuedeEntrar(emiliano))
+    
+    zelt.ingresarACarpa(adam)
+    
+    zelt.servirJarra(adam, 1) 
+    
+    zelt.ingresarACarpa(noah)
+    zelt.ingresarACarpa(adler)
+    zelt.ingresarACarpa(marek)
+    zelt.ingresarACarpa(emiliano)
+    
+    zelt.servirJarra(emiliano, 1)
+    zelt.servirJarra(emiliano, 1)
+    zelt.servirJarra(emiliano, 1)
+    zelt.servirJarra(emiliano, 1)
+    zelt.servirJarra(emiliano, 1)
+    zelt.servirJarra(emiliano, 1)
+    zelt.servirJarra(adam, 1)
+    zelt.servirJarra(adam, 1)
+    zelt.servirJarra(noah, 1)
+    zelt.servirJarra(noah, 1)
+    zelt.servirJarra(noah, 1)
+    zelt.servirJarra(marek, 1)
+    zelt.servirJarra(marek, 1)
+    zelt.servirJarra(marek, 1)
+    zelt.servirJarra(marek, 1)
+    zelt.servirJarra(adler, 1)
+    zelt.servirJarra(adler, 1)
+    
+    assert.equals(4,zelt.contEbrioEmpedernido())
+    assert.that(adam.esEbrioEmpedernido())
+    assert.that(adler.esEbrioEmpedernido())
+    assert.notThat(noah.esEbrioEmpedernido())
+    assert.that(marek.esEbrioEmpedernido())
+    assert.that(emiliano.esEbrioEmpedernido())
+}
